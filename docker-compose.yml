@@ -20,12 +20,12 @@ services:
       - ./certs/cje.local.key:/etc/nginx/cje.local.key:ro
       - ./certs/cje.local.crt:/etc/nginx/cje.local.crt:ro
     depends_on: #to force proxy to start after:
-      - cjoc
+      - cje
 
-  cjoc:
-    container_name: cjoc
+  cje:
+    container_name: cje
     #https://hub.docker.com/r/cloudbees/jenkins-enterprise/
-    image: cloudbees/jenkins-operations-center:2.150.3.2
+    image: cloudbees/jenkins-enterprise:2.150.3.2
     ports:
       - "50000:50000"
     environment:
@@ -44,8 +44,8 @@ services:
         -Dcb.BeekeeperProp.autoInstallIncremental=true
         -Dorg.apache.commons.jelly.tags.fmt.timeZone=America/New_York
         "
-      JENKINS_OPTS: "--prefix=/cjoc"
+      JENKINS_OPTS: "--prefix=/cje"
     volumes:
-      - ./data/cjoc:/var/jenkins_home
+      - ./data/cje:/var/jenkins_home
       - ./data/backups:/backups
       - ./certs/cacerts:/var/jenkins_home/cacerts:ro
